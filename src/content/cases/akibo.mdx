@@ -1,0 +1,29 @@
+## The engineering problem
+
+Natural language is flexible. Money movements need explicit meaning. A personal-finance assistant must bridge those two worlds without turning ambiguity into silent changes to financial records.
+
+I founded Akibo in 2026: an AI personal-finance assistant on WhatsApp and Telegram, with chat and voice interactions and a Next.js dashboard. This is a closed-source product. The public overview and my resume support the capabilities described here; no private source or customer information is included.
+
+## From conversation to structured operations
+
+The application connects messaging integrations to an agent loop with schema-validated tools and explicit confirmations. Structured tool calling separates a model’s interpretation from the operations the application permits. A request that cannot be represented by a validated operation should not silently become a financial mutation.
+
+The stack includes TypeScript, Node.js, Next.js, PostgreSQL and Redis. PostgreSQL row-level security provides a database boundary for tenant-isolated records. Agent orchestration and financial storage have different responsibilities, even when they support the same conversation.
+
+## Reconciliation and transaction integrity
+
+Statement import supports OFX, CSV, PDF and photos, followed by reconciliation. Imported financial data needs to be matched to existing records rather than blindly appended. Otherwise, repeated imports or overlapping statements can produce apparently plausible but incorrect balances.
+
+The public project overview describes 47 automated money-integrity invariants. That is a count of checks, not a claim about customer adoption, revenue or universal correctness. The portfolio deliberately avoids publishing financial records or unsupported business metrics.
+
+## Tradeoffs and ownership
+
+Messaging is an accessible interface, but a conversation is not always the best place to inspect structured financial history. The dashboard provides a complementary surface for that work. Explicit confirmations add interaction cost, but make consequential operations easier to understand before committing them.
+
+Row-level security is a useful defense boundary, while schema validation constrains tool inputs. Neither replaces authorization checks, reconciliation or tests of financial invariants. These controls address different failure modes and need to work together.
+
+## Product perspective
+
+Akibo combines product direction with full-stack implementation and operations. It reflects an interest in using AI where it can improve a concrete workflow, with a clear boundary between a helpful conversation and a trustworthy financial record.
+
+The live destination has not been independently verified, so this case study links to the public project overview. An architecture walkthrough can be discussed directly without exposing private implementation details.

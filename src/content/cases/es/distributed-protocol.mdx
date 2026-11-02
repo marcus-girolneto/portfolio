@@ -1,0 +1,21 @@
+## El problema de ingeniería
+
+Los nodos reciben eventos en momentos distintos, pueden desconectarse o reiniciarse con estado incompleto. La fiabilidad exige preservar el acuerdo y recuperar una visión coherente de la red.
+
+Mi trabajo profesional incluyó consenso, rollback y recuperación de instantáneas, sincronización L1, pruebas de estado, staking delegado y rendimiento de Merkle Patricia Trie. Investigué incidentes en producción, incluido un bucle de reinicio de mainnet, y entregué correcciones de recuperación y versiones.
+
+## Arquitectura conceptual
+
+Los validadores coordinan consenso e instantáneas acordadas. Sincronización y recuperación conectan el estado local con uno aceptado; las pruebas verifican compromisos sobre ese estado. El diagrama explica responsabilidades, no mensajes privados.
+
+El trabajo utilizó Scala y Cats Effect, junto con AWS, Docker y Ansible. El repositorio público Tessellation ofrece contexto; aquí no se publica material propietario.
+
+## Corrección y operación
+
+Recuperar no significa solo reiniciar. Un nodo debe reconstruir estado coherente, identificar instantáneas fiables y volver a participar sin convertir trabajo incompleto en historial aceptado. La concurrencia obliga a revisar supuestos de estado y ciclo de vida.
+
+Construí herramientas de despliegue, monitorización, reinicio automático y streaming de instantáneas para operadores y socios. La automatización debe conservar evidencia para el diagnóstico.
+
+## Producción y simulación
+
+Las responsabilidades profesionales proceden del currículum. La simulación de consenso con líder es educativa: **no es el protocolo Constellation**, no reproduce su seguridad ni afirma que una arquitectura alternativa se haya desplegado.

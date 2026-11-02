@@ -1,0 +1,29 @@
+## The engineering problem
+
+An append-only API is a promise made by its operator. A transparency log makes that promise inspectable: clients can verify that an entry belongs to a committed tree and that a newer tree extends an older one.
+
+Witness is an independent Go project implementing RFC 6962 Merkle inclusion and consistency proofs, Ed25519 signed checkpoints, crash-safe file storage and a split-view monitor.
+
+## From an entry to a verifiable receipt
+
+A single sequencer batches queued appends, writes the entry file and hash index, synchronizes storage, computes the new Merkle root and atomically persists a signed checkpoint. The request receives its receipt only after the entry is durable and covered by that checkpoint.
+
+Clients verify both checkpoint signatures and Merkle proofs. The server’s statement is evidence to inspect, rather than a reason to bypass verification. Historical subtree hashes allow proofs to be assembled without rehashing the entire log.
+
+## Why domain separation matters
+
+RFC 6962 hashes leaves with a `0x00` prefix and internal nodes with a `0x01` prefix. Those prefixes keep leaf data and internal hash concatenations in different domains. Without the separation, a tree node could be confused with an entry containing its child hashes.
+
+The interactive tree below computes real SHA-256 hashes with those prefixes for a four-leaf example. It illustrates an inclusion path and how changing a leaf changes the root. It does not create a signed checkpoint or implement a production monitor.
+
+## Durability and conflicting histories
+
+The file format includes checksums. Startup reconstructs and verifies state against the last signed checkpoint, refusing a store that has become shorter or different. A failed synchronization poisons further writes rather than allowing the service to claim durability it cannot establish.
+
+A signature alone does not prevent a dishonest operator from signing two histories. The monitor persists a trusted checkpoint and checks subsequent views for consistency, rollback, forks and conflicting equal-size roots. Split-view detection depends on the views meeting; an isolated client cannot infer what another audience was shown.
+
+## Tradeoffs and limits
+
+Group commit amortizes synchronization across a batch and a single writer simplifies ordering. The current design verifies the log at startup, making recovery work proportional to its size. File-backed storage and an in-memory offset index are deliberate limits of this compact implementation.
+
+Witness cosigning, freshness policies and tiled storage are documented roadmap items, not capabilities claimed as shipped here. The linked repository explains those limits and the differential, fuzz, storage-recovery and monitor tests. Transparency requires both sound cryptographic proofs and a plan for who observes them.

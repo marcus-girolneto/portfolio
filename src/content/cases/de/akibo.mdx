@@ -1,0 +1,21 @@
+## Die technische Aufgabe
+
+Natürliche Sprache ist flexibel; Finanzdaten benötigen eindeutige Bedeutung. Ein Assistent muss beides verbinden, ohne Mehrdeutigkeit in stille Datenänderungen zu verwandeln.
+
+Ich gründete Akibo 2026: einen persönlichen Finanzassistenten mit Chat, Sprache, Messaging und Next.js-Dashboard. **Projekt und Repository sind privat.** Lebenslauf und öffentliche Übersicht belegen die beschriebenen Fähigkeiten; das autorisierte Repository ergänzte den Kontext.
+
+## Architektur und Integrität
+
+Agenten nutzen schemavalidierte Tools und ausdrückliche Bestätigungen. So bleibt Modellinterpretation von erlaubten Operationen getrennt. Der Stack umfasst TypeScript, Node.js, Next.js, PostgreSQL und Redis.
+
+PostgreSQL Row-Level Security unterstützt die Datenisolation. OFX-, CSV-, PDF- und Fotoimporte werden abgeglichen, damit wiederholte Dokumente keine falschen Salden erzeugen. Die öffentliche Übersicht beschreibt 47 automatisierte Integritätsinvarianten; das ist keine Adoptionszahl oder universelle Garantie.
+
+## Produktentscheidungen
+
+Messaging erleichtert den Zugang, das Dashboard die strukturierte Prüfung. Bestätigungen kosten einen Schritt, machen folgenreiche Aktionen aber verständlicher. Validierung, Autorisierung, Isolation und Tests adressieren verschiedene Fehler.
+
+WhatsApp und Telegram gehören zum Lebenslaufumfang. Da Dokumentationsstände variieren, wird nicht behauptet, jeder Kanal sei aktuell aktiv. Eine ungeprüfte Produktadresse wird nicht veröffentlicht.
+
+## End-to-End-Verantwortung
+
+Akibo verbindet Produktentwicklung, Full-Stack-Engineering und Betrieb. Eine Architekturführung ist im Gespräch möglich, ohne privaten Code, Infrastruktur oder Kundendaten offenzulegen.

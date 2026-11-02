@@ -1,0 +1,29 @@
+## The engineering problem
+
+Publishing an event is easy. Delivering it to a slow, unavailable or unreliable receiver without losing it is a system. Hookrelay is a compact implementation of durable webhook fan-out, request signing, retries, delivery inspection and dead-letter replay.
+
+This is an independent open-source project. The source repository contains setup instructions, design notes and tests. The browser demonstration is a simplified model, not a running Hookrelay deployment.
+
+## One durable coordination layer
+
+The Go API records events and deliveries in PostgreSQL. A bounded worker pool claims due deliveries using `SELECT … FOR UPDATE SKIP LOCKED`, allowing multiple instances to share the same database without double-claiming a row.
+
+Database locks are held for the claim statement, not across an external HTTP request. Leases and fencing tokens prevent a late worker result from overwriting newer state after its lease has expired. This distinction matters: exclusive claiming alone does not protect the completion path from stale workers.
+
+## Retries without an amplification loop
+
+The documented retry policy uses capped exponential backoff with full jitter, honors `Retry-After` on 429 and 503 responses, and applies a per-request timeout. Deliveries reach a dead-letter state after a configurable attempt limit. A 410 response disables the endpoint and dead-letters its backlog.
+
+Jitter spreads retries rather than synchronizing many workers against a recovering receiver. Dead-letter replay provides an explicit recovery path when the underlying problem has been addressed. Attempts remain inspectable instead of disappearing into a background loop.
+
+## Identity and verification
+
+Publishing requires an idempotency key. Repeating the same request returns the original event; reusing its key for different content is rejected. Delivery uses Standard Webhooks HMAC-SHA256 signatures with an identifier and timestamp. The receiver still needs to verify the signature and deduplicate delivery identifiers.
+
+This is an at-least-once delivery design. A receiver can process a request while the sender fails to observe its response. Idempotent handling on the receiver is essential; a queue cannot turn that network ambiguity into exactly-once external effects.
+
+## Tradeoffs and evidence
+
+PostgreSQL keeps the coordination model small and durable, while concentrating queue traffic and state in one database. Row claims, indexes, leases and observability therefore matter as load grows. The project includes Prometheus metrics, structured logs and graceful shutdown behavior.
+
+The most useful architectural lesson is in the boundary between a durable claim and an unreliable network call. Claiming work, performing work and recording its result are distinct steps with different failure modes. The source documentation explains the implementation and testing in detail.

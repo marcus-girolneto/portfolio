@@ -1,0 +1,19 @@
+## El problema de ingeniería
+
+Publicar un evento es fácil. Entregarlo a un receptor lento o caído sin perderlo requiere un sistema. Hookrelay es un proyecto independiente de código abierto con fan-out duradero, firmas, reintentos, inspección y replay de la cola de fallos.
+
+## Coordinación duradera
+
+La API Go persiste eventos y entregas en PostgreSQL. Los workers reclaman trabajo con `SELECT … FOR UPDATE SKIP LOCKED`. Los bloqueos duran la reclamación, nunca la llamada HTTP.
+
+Leases y tokens de fencing impiden que un worker tardío sobrescriba el estado después de perder su autorización. Reclamar, ejecutar y registrar resultados son fronteras de fallo distintas.
+
+## Fallos, repetición e identidad
+
+La política usa backoff exponencial limitado con jitter, timeout y `Retry-After` en 429/503. El límite de intentos lleva a la cola de fallos; replay permite recuperación explícita. Un 410 desactiva el receptor.
+
+La publicación exige una clave de idempotencia. Repetir devuelve el evento original; cambiar contenido con la misma clave se rechaza. HMAC-SHA256 sigue Standard Webhooks. El receptor aún debe verificar firmas y deduplicar.
+
+## Garantías y límites
+
+La entrega es **al menos una vez**, no efectos externos exactamente una vez. El receptor puede procesar sin que el emisor vea la respuesta. La demo simplifica el modelo y comprime el tiempo; el repositorio documenta pruebas, métricas y los compromisos de usar PostgreSQL como cola.

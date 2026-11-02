@@ -1,0 +1,21 @@
+## Die technische Aufgabe
+
+Verteilte Knoten sehen Ereignisse zu unterschiedlichen Zeiten, verlieren Verbindungen oder starten mit unvollständigem Zustand neu. Zuverlässigkeit verlangt Einigung und einen Weg zurück zu einem kohärenten Netzwerkzustand.
+
+Meine Arbeit umfasste Konsens, Snapshot-Rollback und Wiederherstellung, L1-Synchronisierung, Zustandsbeweise, delegiertes Staking und Merkle-Patricia-Trie-Performance. Ich untersuchte Produktionsstörungen, darunter eine Mainnet-Neustartschleife, und lieferte Recovery- und Release-Korrekturen.
+
+## Konzeptuelle Architektur
+
+Validatoren koordinieren Konsens und vereinbarte Snapshots. Synchronisierung und Recovery verbinden lokalen Zustand mit akzeptierter Historie. Beweise prüfen Zustandszusagen. Die Darstellung erklärt Verantwortlichkeiten, keine privaten Nachrichtenfolgen.
+
+Scala und Cats Effect bildeten die Grundlage; AWS, Docker und Ansible unterstützten den Betrieb. Das öffentliche Tessellation-Repository liefert Protokollkontext. Proprietäres Material wird nicht veröffentlicht.
+
+## Korrektheit und Betrieb
+
+Wiederherstellung ist mehr als ein Prozessneustart. Ein Knoten muss kohärenten Zustand rekonstruieren, vertrauenswürdige Snapshots erkennen und unvollständige Arbeit von bestätigter Historie unterscheiden. Nebenläufigkeit erfordert die Prüfung geteilter Zustands- und Lebenszyklusannahmen.
+
+Ich entwickelte Deployment-, Monitoring-, Auto-Restart- und Snapshot-Streaming-Werkzeuge für Operatoren und Partner. Automatisierung muss Diagnosebelege erhalten, statt Fehler nur wiederholt neu zu starten.
+
+## Produktion und Simulation
+
+Die beschriebenen beruflichen Aufgaben sind im Lebenslauf belegt. Die Leader-basierte Simulation ist didaktisch: Sie ist **nicht das Constellation-Protokoll**, bildet dessen Sicherheitsmodell nicht nach und behauptet keinen produktiven Architekturumbau.

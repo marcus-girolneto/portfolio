@@ -1,0 +1,21 @@
+## El problema de ingeniería
+
+La reforma tributaria brasileña aumenta la validación de facturas para despachos contables. Un sistema útil debe producir resultados vinculados a reglas oficiales y un flujo claro de corrección.
+
+Construí Arconta como un SaaS para estos despachos. **El repositorio es privado y el producto está en piloto.** No se divulgan código ni infraestructura ni se afirma adopción comercial amplia o asesoría fiscal certificada.
+
+## Una frontera determinista
+
+El producto recibe XML fiscal, valida esquemas y aplica reglas con citas oficiales. Los hallazgos son explicables: el modelo no emite el veredicto fiscal.
+
+Una LLM puede redactar hechos ya calculados, pero no decidir si una factura cumple. Los datos oficiales ausentes no se inventan. La stack incluye TypeScript, Fastify, Next.js, PostgreSQL y contratos Zod compartidos.
+
+## Aislamiento y procesamiento
+
+El aislamiento por inquilino se aplica en la aplicación y la base de datos. El procesamiento asíncrono separa recepción y validación de la interfaz del contador. La deduplicación evita procesar documentos repetidos como nuevos.
+
+Los contratos compartidos alinean API, interfaz y procesos sobre el significado de los resultados. El flujo de corrección transforma hallazgos en acciones revisables.
+
+## Estado y límites
+
+La documentación distingue rutas probadas de integraciones pendientes de aprobación externa o validación. Las reglas fiscales aún necesitan revisión profesional contable. La trazabilidad y los límites explícitos son parte del producto. El sitio público vinculado fue verificado.

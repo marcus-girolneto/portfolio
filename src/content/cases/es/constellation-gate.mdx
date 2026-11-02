@@ -1,0 +1,21 @@
+## El problema de ingeniería
+
+Prompts, documentos recuperados y respuestas de herramientas pueden introducir instrucciones no fiables en aplicaciones LLM. Una frontera de seguridad debe evaluar esas entradas sin volver impracticable el uso legítimo.
+
+En Constellation Network diseñé y construí Gate desde cero y después dirigí su equipo. Mi responsabilidad abarcó aplicación, infraestructura y base de datos. Este relato describe capacidades públicas, sin revelar el detector ni la infraestructura privada.
+
+## Arquitectura y decisiones
+
+Gate combina aislamiento multiinquilino, detección de prompt injection, análisis de datos sensibles, compresión, caché, integraciones de proveedores y auditoría verificable. El diagrama organiza responsabilidades; no muestra una topología privada ni un orden interno de ejecución.
+
+La caché evita trabajo repetido y la compresión reduce prompts, pero ambas exigen preservar contexto y límites entre inquilinos. Ninguna sustituye la evaluación de seguridad. Observabilidad y auditoría permiten revisar decisiones después de la solicitud.
+
+## Evaluación publicada
+
+Soy coautor con Ryle Goehausen de _Gate AI: LLM Security Benchmark — Evaluation Methodology & Results_. El preprint del 27 de mayo de 2026 informa **97,4% de micro-F1 con 1,0% de falsos positivos**, sobre **16 conjuntos públicos y 12.111 muestras**.
+
+El resultado principal usa validación cruzada estratificada de cinco folds y un punto de operación global. Incluye diagnósticos de ejemplos similares y generalización. Son resultados del corpus publicado, no una garantía para toda producción. La publicación vinculada explica metodología, limitaciones y posibles revisiones.
+
+## Perspectiva de ingeniería
+
+La calidad de detección es solo una parte del servicio. Fricción para usuarios legítimos, aislamiento, observabilidad y recuperación también forman parte de una frontera operativa fiable.

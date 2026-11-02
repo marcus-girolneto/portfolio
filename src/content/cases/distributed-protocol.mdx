@@ -1,0 +1,33 @@
+## The engineering problem
+
+Distributed nodes see events at different times. Some nodes are slow, some disconnect, and some restart with incomplete local state. Reliability depends on how the system preserves agreement and how operators recover when a node’s view stops matching the network.
+
+My professional work at Constellation Network included the core Scala protocol: consensus, snapshot rollback and recovery, L1 synchronization, state proofs, delegated staking and Merkle Patricia Trie performance. I also investigated production incidents on a live network, including a mainnet restart loop, and shipped recovery and release fixes under time pressure.
+
+## A conceptual architecture
+
+Validator peers coordinate around consensus and agreed snapshots. Synchronization and recovery reconnect a node’s local view with an accepted state. State proofs help verify commitments to that state. The diagram is an explanatory model of these responsibilities; it is not an assertion of a specific message sequence or private topology.
+
+Scala and Cats Effect support this work alongside AWS, Docker and Ansible for infrastructure and operations. The public Tessellation repository provides the appropriate source context for the protocol. This portfolio does not republish proprietary implementation material.
+
+## Correctness across failure boundaries
+
+Recovery is more than restarting a process. A restarted node must recover a coherent state, establish which snapshots it can trust and resume participation without treating incomplete work as accepted history. Synchronization needs to distinguish a lagging peer from an inconsistent local view.
+
+Concurrency creates a second boundary: operations that appear independent can still share state or lifecycle assumptions. Incident response requires tracing those assumptions across logs, persisted state and release behavior. Production recovery work must address both the immediate failure and the conditions that would trigger it again.
+
+## Operations are part of the architecture
+
+I built deployment, monitoring, auto-restart and snapshot-streaming tooling for node operators and partner teams. Earlier work included remote cluster deployment with Ansible and Docker, status inspection and log retrieval from one command.
+
+These tools help make the system’s state observable and its recovery steps repeatable. Automation is useful only when it preserves enough evidence to diagnose the underlying failure; a restart loop without context is not operational reliability.
+
+## Production work and illustrative proposals
+
+The work described above is supported by my resume and public professional overview. The Engineering Lab’s leader-based consensus demonstration is an educational simulation. It is **not the Constellation protocol**, does not reproduce its security model and makes no claim about its actual consensus mechanism.
+
+Likewise, the conceptual diagram organizes responsibilities for explanation. It is not a proposed replacement architecture or evidence that a particular redesign was shipped.
+
+## Engineering perspective
+
+This work is a practical reminder that correctness and operability are connected. Recovery paths, state inspection and release tooling deserve the same attention as the normal execution path. The hardest engineering questions often appear when the network is already unhealthy.

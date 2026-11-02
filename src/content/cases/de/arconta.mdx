@@ -1,0 +1,21 @@
+## Die technische Aufgabe
+
+Brasiliens Steuerreform erhöht den Prüfaufwand für Steuerkanzleien. Ein nützliches System muss aus Fiskaldokumenten Befunde mit nachvollziehbarer Regelgrundlage und klare Korrekturabläufe erzeugen.
+
+Ich habe Arconta als SaaS für brasilianische Kanzleien entwickelt. **Das Repository ist privat; das Produkt befindet sich im Pilotbetrieb.** Hier werden weder private Infrastruktur noch breite Marktnutzung oder zertifizierte Steuerberatung behauptet.
+
+## Eine deterministische Grenze
+
+Arconta nimmt Steuer-XML entgegen, prüft Schemas und wendet Regeln mit offiziellen Quellen an. Daraus entstehen erklärbare Befunde, keine vom Sprachmodell erzeugten Steuerurteile.
+
+Ein LLM darf bereits berechnete Fakten formulieren, entscheidet aber nicht über Konformität. Fehlende offizielle Angaben bleiben offen. TypeScript, Fastify, Next.js, PostgreSQL und gemeinsame Zod-Verträge bilden den Stack.
+
+## Isolation und Verarbeitung
+
+Mandantentrennung gehört in Anwendung und Datenbank. Hintergrundverarbeitung entkoppelt Eingang und Prüfung von der Benutzeroberfläche. Deduplizierung verhindert, dass wiederholte Dokumente als neue Vorgänge gelten.
+
+Gemeinsame Verträge stimmen API, Oberfläche und Verarbeitung auf die Bedeutung eines Befunds ab. Der Korrekturablauf macht daraus prüfbare Handlungen der Kanzlei.
+
+## Produktstand und Grenzen
+
+Die Dokumentation unterscheidet getestete Pilotpfade von Integrationen mit ausstehenden Freigaben oder Prüfungen. Steuerregeln benötigen weiterhin fachliche Überprüfung. Nachvollziehbarkeit und ausdrückliche Grenzen sind Teil des Produkts. Die öffentliche Produktwebsite wurde geprüft und ist unten verlinkt.

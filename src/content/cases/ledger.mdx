@@ -1,0 +1,31 @@
+## The engineering problem
+
+Financial history cannot depend on every application caller remembering every rule. Duplicate requests, concurrent withdrawals and direct database writes can all violate assumptions that look correct in a single happy-path request.
+
+Ledger is an independent TypeScript service with a Fastify API, PostgreSQL and a React dashboard. It records money movements as balanced journal entries and places critical invariants in the database itself.
+
+## A posting is one atomic operation
+
+The API validates the posting and claims an idempotency key with a request fingerprint. It locks the affected accounts in deterministic order, computes the new balances, inserts journal entries and commits the transaction. A deferred constraint trigger rechecks that the posting balances and does not mix currencies.
+
+A repeated successful request with the same key returns the stored transaction. A different payload using that key is a conflict. A failed transaction rolls back its claim, allowing a corrected request to reuse the key. That makes retry semantics part of the data model, rather than an informal HTTP convention.
+
+## Money and concurrency
+
+Amounts use integer minor units and are represented as strings at the API boundary, preserving precision beyond JavaScript’s safe integer range. Account locking serializes competing updates, and deterministic lock order avoids cycles between transfers touching the same accounts.
+
+Postings that would overdraw a protected account are rejected. The service validates these rules for useful errors, while constraints and triggers protect the database when a script or future caller bypasses the service.
+
+## History remains history
+
+Updates and deletes on entries and transactions are rejected. Corrections are posted as linked reversals instead of rewriting the original record. Stored account balances support efficient reads; the trial-balance report derives balances again from the entries and exposes drift.
+
+The interactive example below shows a balanced deposit and idempotent replay using a deterministic local model. It is illustrative; the repository’s guarantees are implemented in PostgreSQL and tested against a real database.
+
+## Evidence and tradeoffs
+
+The README documents integration, invariant and concurrency tests, including competing withdrawals and duplicate requests sharing a key. Those tests exercise the database because application-only mocks cannot establish the behavior of constraints or locks.
+
+Pessimistic locking favors explicit conflict handling for hot accounts, with the throughput tradeoff of serializing those updates. Storing both balances and history makes reads cheaper while creating a reconciliation responsibility. Authentication, tenant isolation and an outbox are documented roadmap items, not completed capabilities claimed by this case study.
+
+The key design idea is to make correctness observable and enforceable at the boundary that owns the data.

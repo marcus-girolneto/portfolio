@@ -1,0 +1,117 @@
+{
+  "verifiedAt": "2026-11-02",
+  "repositories": [
+    {
+      "name": "rolecall",
+      "description": "Permission tests for AI agents. Who can make your agent do what?",
+      "html_url": "https://github.com/marcus-girolneto/rolecall",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2026-10-20T15:59:54Z",
+      "topics": [
+        "ai-agents",
+        "authorization",
+        "llm",
+        "prompt-injection",
+        "security",
+        "testing",
+        "typescript",
+        "vercel-ai-sdk"
+      ]
+    },
+    {
+      "name": "agent-reliability-lab",
+      "description": "Evaluate tool-using incident-response agents with evidence-grounded scoring, fault injection, and reproducible traces.",
+      "html_url": "https://github.com/marcus-girolneto/agent-reliability-lab",
+      "language": "Python",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2026-10-18T00:23:00Z",
+      "topics": [
+        "agents",
+        "ai-engineering",
+        "llm-evaluation",
+        "openai",
+        "python",
+        "reliability"
+      ]
+    },
+    {
+      "name": "ledger",
+      "description": "Double-entry ledger in TypeScript: idempotent postings, database-enforced invariants and concurrency-safe balances. Fastify, PostgreSQL, React.",
+      "html_url": "https://github.com/marcus-girolneto/ledger",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2026-10-17T12:46:35Z",
+      "topics": [
+        "double-entry-accounting",
+        "fastify",
+        "fintech",
+        "idempotency",
+        "ledger",
+        "nodejs",
+        "postgresql",
+        "react",
+        "typescript"
+      ]
+    },
+    {
+      "name": "hookrelay",
+      "description": "Reliable webhook delivery service: retries with backoff, HMAC signatures (Standard Webhooks), idempotency and Postgres SKIP LOCKED workers",
+      "html_url": "https://github.com/marcus-girolneto/hookrelay",
+      "language": "Go",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2026-10-17T12:39:33Z",
+      "topics": [
+        "backend",
+        "distributed-systems",
+        "go",
+        "golang",
+        "postgresql",
+        "prometheus",
+        "webhooks"
+      ]
+    },
+    {
+      "name": "witness",
+      "description": "Tamper-evident append-only transparency log: RFC 6962 Merkle inclusion/consistency proofs, Ed25519 signed checkpoints and a split-view monitor",
+      "html_url": "https://github.com/marcus-girolneto/witness",
+      "language": "Go",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2026-10-17T12:38:02Z",
+      "topics": [
+        "cryptography",
+        "ed25519",
+        "go",
+        "golang",
+        "merkle-tree",
+        "rfc6962",
+        "security",
+        "transparency-log"
+      ]
+    },
+    {
+      "name": "beacon",
+      "description": "High-throughput, privacy-friendly analytics event collector: batching pipeline with backpressure, Postgres COPY sink, UTM and channel attribution",
+      "html_url": "https://github.com/marcus-girolneto/beacon",
+      "language": "Go",
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "updated_at": "2026-10-17T12:35:07Z",
+      "topics": [
+        "analytics",
+        "backend",
+        "event-ingestion",
+        "go",
+        "golang",
+        "postgresql",
+        "privacy",
+        "utm"
+      ]
+    }
+  ]
+}

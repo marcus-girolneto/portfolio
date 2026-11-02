@@ -1,0 +1,29 @@
+## The engineering problem
+
+Brazil’s tax reform creates new validation work for accounting firms managing invoices across many clients. A useful system must turn structured fiscal documents into findings that an accountant can trace to the applicable rule, then support a clear correction workflow.
+
+Arconta is a private SaaS project I built for Brazilian accounting firms. Its repository was reviewed for this portfolio, but its code, internal operations and infrastructure are not published here. The product is in a pilot stage; this case study does not claim broad commercial adoption or certified tax advice.
+
+## A deterministic validation boundary
+
+The product receives fiscal XML, validates the document schema and evaluates fiscal rules with official citations. The result is a set of traceable findings rather than a model-generated tax verdict.
+
+The key architectural choice is to separate rule evaluation from language generation. An LLM can help phrase findings that have already been computed. It does not decide whether an invoice is compliant. Missing authoritative information remains missing rather than becoming an inferred value.
+
+## Tenant-aware workflows
+
+The high-level stack includes a TypeScript/Fastify API, a Next.js application, PostgreSQL and shared Zod contracts. Tenant isolation belongs in the database as well as the application. Background processing separates document intake and validation from the accountant’s interactive workflow.
+
+Document deduplication matters because invoices can arrive more than once. Shared contracts keep the frontend, API and processing stages aligned on the meaning of a validation result. A correction workflow then connects findings to an action the accounting firm can inspect.
+
+## Product state and limits
+
+The private project documentation distinguishes tested pilot paths from integrations awaiting external approval or further validation. This portfolio therefore describes the product’s core architecture without presenting every planned channel or billing integration as operational.
+
+Fiscal rules still require professional accounting review. Traceability and explicit limits are part of the product: a software finding needs an explainable basis, and the system should not substitute confident language for an authoritative rule.
+
+## Engineering perspective
+
+Arconta demonstrates end-to-end product ownership in a domain where correctness depends on both technical constraints and evolving external rules. The design brings together structured ingestion, deterministic evaluation, tenant isolation and actionable communication, while keeping the authority of each stage explicit.
+
+The public product website is linked below. Source access remains private; a technical walkthrough can cover the architecture without exposing sensitive implementation material.

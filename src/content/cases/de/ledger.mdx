@@ -1,0 +1,21 @@
+## Die technische Aufgabe
+
+Finanzhistorie darf nicht davon abhängen, dass jeder Aufrufer alle Regeln beachtet. Doppelte Requests, konkurrierende Abbuchungen und direkte Datenbankzugriffe können Annahmen verletzen.
+
+Ledger ist ein eigenständiges Projekt mit TypeScript/Fastify-API, PostgreSQL und React-Dashboard. Kritische Invarianten werden in der Datenbank erzwungen.
+
+## Eine atomare Buchung
+
+Die API validiert Buchungen und beansprucht einen Idempotenzschlüssel mit Inhaltsfingerprint. Konten werden in deterministischer Reihenfolge gesperrt, Salden berechnet und Einträge atomar geschrieben. Ein verzögerter Trigger prüft beim Commit Ausgleich und Währung.
+
+Wiederholungen erfolgreicher Requests geben die ursprüngliche Transaktion zurück. Anderer Inhalt mit demselben Schlüssel führt zum Konflikt. Fehler rollen auch die Schlüsselbeanspruchung zurück.
+
+## Geld, Nebenläufigkeit und Historie
+
+Beträge sind ganzzahlige Untereinheiten und werden als Strings übertragen, um Präzision zu erhalten. Sperren serialisieren konkurrierende Änderungen. Historie wird nicht geändert oder gelöscht; Korrekturen sind verknüpfte Gegenbuchungen. Der Saldenbericht rekonstruiert Werte aus Einträgen.
+
+Die dokumentierten Tests nutzen echtes PostgreSQL für Invarianten, Duplikate und Nebenläufigkeit. Anwendungsmocks beweisen keine Datenbanksperren oder Constraints.
+
+## Garantien und Grenzen
+
+Pessimistisches Sperren vereinfacht Konflikte, serialisiert aber stark genutzte Konten. Gespeicherte und abgeleitete Salden erfordern Abgleich. Authentifizierung, Mandantenisolation und Outbox sind Roadmap. Die Demo ist ein lokales Modell; die realen Garantien liegen im Dienst und in PostgreSQL.

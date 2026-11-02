@@ -1,0 +1,21 @@
+## Le problème d’ingénierie
+
+Une API append-only est une promesse de l’opérateur. Un journal de transparence permet de vérifier l’inclusion et l’extension cohérente d’un arbre antérieur.
+
+Witness est un projet Go indépendant avec preuves Merkle RFC 6962, checkpoints Ed25519, stockage résistant aux pannes et surveillance d’historiques contradictoires.
+
+## De l’entrée au reçu
+
+Un séquenceur groupe les entrées, écrit données et index de hachage, synchronise le stockage et persiste atomiquement un checkpoint signé. Il répond ensuite. Les clients vérifient signatures et preuves eux-mêmes.
+
+RFC 6962 sépare les domaines : `0x00` pour les feuilles, `0x01` pour les nœuds internes. La démo calcule un vrai SHA-256 sur quatre feuilles. Elle ne signe pas de checkpoint et ne remplace pas un moniteur complet.
+
+## Durabilité et observation
+
+Sommes de contrôle et comparaison au dernier checkpoint protègent la reprise. Un échec de synchronisation interrompt les écritures. Le moniteur conserve un checkpoint fiable et vérifie rollback, forks et racines incompatibles à taille égale.
+
+Une signature n’empêche pas un opérateur malhonnête de signer deux histoires. Détecter une vue divisée exige que les vues se rencontrent.
+
+## Compromis et limites
+
+Group commit amortit les synchronisations ; un seul écrivain simplifie l’ordre. La vérification initiale est proportionnelle à la taille du journal. Cosignature, fraîcheur et stockage en tuiles sont des éléments de roadmap. Le dépôt décrit tests différentiels, fuzzing et reprise.

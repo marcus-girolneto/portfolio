@@ -1,0 +1,21 @@
+## O problema de engenharia
+
+A reforma tributária brasileira aumenta o trabalho de validação para escritórios contábeis. O sistema precisa transformar documentos fiscais em resultados rastreáveis às regras aplicáveis e apoiar um fluxo claro de correção.
+
+Construí o Arconta como um SaaS para escritórios contábeis. **O repositório é privado e o produto está em piloto.** O relato não expõe código ou infraestrutura e não afirma adoção comercial ampla ou certificação de aconselhamento fiscal.
+
+## Uma fronteira determinística
+
+O produto recebe XML fiscal, valida o esquema e aplica regras com citações oficiais. O resultado é um conjunto de apontamentos explicáveis, não um veredito fiscal gerado por modelo.
+
+Uma LLM pode ajudar a redigir fatos já calculados, mas não decide se uma nota está correta. Informação oficial ausente permanece ausente. A stack inclui TypeScript, Fastify, Next.js, PostgreSQL e contratos compartilhados em Zod.
+
+## Isolamento e processamento
+
+Isolamento por tenant é uma responsabilidade da aplicação e do banco. Processamento em segundo plano separa recebimento e validação da interação do contador. Deduplicação evita tratar o mesmo documento repetido como novo.
+
+Contratos compartilhados alinham API, interface e processamento sobre o significado dos resultados. O fluxo de correção transforma esses resultados em ações que o escritório pode inspecionar.
+
+## Estado do produto e limites
+
+A documentação distingue caminhos testados no piloto de integrações que aguardam aprovação externa ou validação adicional. As regras fiscais ainda exigem revisão profissional contábil. Rastreabilidade e limites explícitos fazem parte do produto. O site público foi verificado e está vinculado abaixo.

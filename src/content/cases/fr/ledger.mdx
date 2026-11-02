@@ -1,0 +1,21 @@
+## Le problème d’ingénierie
+
+L’intégrité financière ne peut dépendre du respect de toutes les règles par chaque appelant. Doublons, retraits concurrents et écritures directes peuvent violer les hypothèses.
+
+Ledger est un projet indépendant avec API TypeScript/Fastify, PostgreSQL et tableau de bord React. Les invariants critiques sont imposés par la base.
+
+## Une écriture atomique
+
+L’API valide l’écriture et réclame une clé d’idempotence avec empreinte du contenu. Elle verrouille les comptes dans un ordre déterministe, calcule les soldes et insère les écritures dans une transaction. Un trigger différé revalide équilibre et devise au commit.
+
+Répéter une requête réussie renvoie la transaction initiale. Un contenu différent avec la même clé crée un conflit. Un échec annule aussi la réclamation de la clé.
+
+## Argent, concurrence et historique
+
+Les montants sont des entiers en unités mineures, transmis en strings pour préserver la précision. Les verrous sérialisent les conflits. L’historique ne se modifie pas : les corrections sont des contre-passations liées. La balance recalcule les soldes depuis les écritures.
+
+Les tests documentés utilisent PostgreSQL réel pour les invariants, doublons et accès concurrents. Les mocks applicatifs ne prouvent pas les contraintes ni les verrous.
+
+## Garanties et limites
+
+Le verrouillage pessimiste simplifie les conflits mais sérialise les comptes sollicités. Stocker solde et historique exige rapprochement. Authentification, isolation des tenants et outbox sont en roadmap. La démo est un modèle local ; les garanties réelles relèvent du service et de PostgreSQL.

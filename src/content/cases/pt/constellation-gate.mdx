@@ -1,0 +1,21 @@
+## O problema de engenharia
+
+Prompts, documentos recuperados e respostas de ferramentas podem introduzir instruções não confiáveis em aplicações com LLMs. Uma barreira de segurança útil precisa avaliar essas entradas sem tornar o uso legítimo impraticável.
+
+Na Constellation Network, projetei e construí o Gate do zero e depois liderei sua equipe de engenharia. Minha responsabilidade incluía aplicação, infraestrutura e banco de dados. Este relato se limita às capacidades públicas, sem revelar detalhes internos do detector.
+
+## Arquitetura e decisões
+
+O Gate reúne atendimento multitenant, detecção de prompt injection, análise de dados sensíveis, compressão de prompts, cache de respostas, integrações com provedores e registros de auditoria verificáveis. O diagrama é conceitual: não representa a topologia privada nem uma ordem interna de execução.
+
+Isolamento de tenants, contexto de auditoria e limites de cache precisam ser considerados ao longo do ciclo da requisição. Cache pode evitar trabalho repetido; compressão reduz o tamanho do prompt. Ambos exigem preservar o contexto e não substituem a avaliação de segurança.
+
+## Avaliação publicada
+
+Sou coautor, com Ryle Goehausen, de _Gate AI: LLM Security Benchmark — Evaluation Methodology & Results_. O preprint de 27 de maio de 2026 relata **97,4% de micro-F1 com 1,0% de falsos positivos**, em **16 conjuntos públicos e 12.111 amostras**.
+
+O resultado principal usa validação cruzada estratificada em cinco folds e um ponto de operação global. O artigo também apresenta diagnóstico agrupado de exemplos semelhantes e verificações de generalização. São resultados no corpus publicado, não uma garantia para qualquer carga de produção. A metodologia, suas limitações e possíveis revisões estão no artigo vinculado.
+
+## Perspectiva de engenharia
+
+Um sistema de segurança de IA precisa ser avaliado como uma fronteira operacional: qualidade da detecção, bloqueios indevidos, isolamento, observabilidade e recuperação fazem parte do mesmo problema.

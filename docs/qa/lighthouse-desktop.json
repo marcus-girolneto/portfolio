@@ -1,0 +1,30 @@
+{
+  "url": "http://127.0.0.1:3191/pt",
+  "fetchedAt": "2026-11-02T12:13:26.606Z",
+  "profile": "desktop",
+  "scores": {
+    "performance": 100,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100
+  },
+  "metrics": {
+    "first-contentful-paint": "0.3 s",
+    "largest-contentful-paint": "0.3 s",
+    "cumulative-layout-shift": "0",
+    "total-blocking-time": "0 ms",
+    "speed-index": "0.3 s"
+  },
+  "opportunities": [
+    {
+      "id": "unused-css-rules",
+      "title": "Reduce unused CSS",
+      "displayValue": "Est savings of 11 KiB"
+    },
+    {
+      "id": "unused-javascript",
+      "title": "Reduce unused JavaScript",
+      "displayValue": "Est savings of 62 KiB"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+## Le problème d’ingénierie
+
+Les nœuds ne voient pas les événements au même moment. Ils ralentissent, se déconnectent ou redémarrent avec un état incomplet. La fiabilité dépend de l’accord et du retour à une vue cohérente.
+
+Mon travail professionnel couvrait consensus, rollback et restauration de snapshots, synchronisation L1, preuves d’état, staking délégué et performance des Merkle Patricia Tries. J’ai traité des incidents en production, dont une boucle de redémarrage mainnet, et livré des correctifs de reprise et de version.
+
+## Architecture conceptuelle
+
+Les validateurs coordonnent consensus et snapshots acceptés. Synchronisation et reprise relient l’état local à l’historique reconnu ; les preuves vérifient ses engagements. Le diagramme explique des responsabilités, pas des échanges privés.
+
+Scala et Cats Effect formaient le socle, avec AWS, Docker et Ansible pour l’infrastructure. Le dépôt public Tessellation fournit le contexte du protocole. Aucun matériel propriétaire n’est reproduit ici.
+
+## Justesse et exploitation
+
+Restaurer ne signifie pas seulement redémarrer. Le nœud doit reconstruire un état cohérent, reconnaître les snapshots fiables et ne pas considérer un travail incomplet comme acquis. La concurrence impose de vérifier les hypothèses partagées de cycle de vie et d’état.
+
+J’ai développé des outils de déploiement, supervision, redémarrage automatique et streaming de snapshots pour opérateurs et partenaires. L’automatisation doit préserver les éléments de diagnostic.
+
+## Production et simulation
+
+Les responsabilités décrites sont étayées par le CV. La simulation à leader est pédagogique : **ce n’est pas le protocole Constellation**, elle ne reproduit pas sa sécurité et n’implique pas qu’une architecture alternative ait été déployée.

@@ -1,0 +1,21 @@
+## Die technische Aufgabe
+
+Eine Append-only-API ist ein Versprechen des Betreibers. Ein Transparenzlog macht Inklusion und konsistentes Wachstum unabhängig prüfbar.
+
+Witness ist ein eigenständiges Go-Projekt mit RFC-6962-Merkle-Beweisen, Ed25519-Checkpoints, absturzsicherem Speicher und Überwachung widersprüchlicher Historien.
+
+## Vom Eintrag zum Beleg
+
+Ein Sequencer bündelt Einträge, schreibt Daten und Hash-Index, synchronisiert Speicher und persistiert atomar einen signierten Checkpoint. Erst danach antwortet er. Clients prüfen Signaturen und Beweise selbst.
+
+RFC 6962 trennt Domänen: Blätter erhalten `0x00`, innere Knoten `0x01`. Die interaktive Vier-Blatt-Demo berechnet echtes SHA-256 und zeigt Änderungen der Wurzel. Sie signiert keine Checkpoints und ersetzt keinen vollständigen Monitor.
+
+## Haltbarkeit und Beobachtung
+
+Prüfsummen und Abgleich mit dem letzten Checkpoint schützen die Wiederherstellung. Synchronisierungsfehler stoppen neue Schreibvorgänge. Der Monitor speichert einen vertrauten Checkpoint und prüft Rollback, Forks und unterschiedliche Wurzeln gleicher Größe.
+
+Eine Signatur verhindert nicht, dass ein unehrlicher Betreiber zwei Historien signiert. Split-View-Erkennung setzt voraus, dass diese Ansichten zusammentreffen.
+
+## Tradeoffs und Grenzen
+
+Group Commit verteilt Synchronisierungskosten; ein Writer vereinfacht die Reihenfolge. Die vollständige Startprüfung wächst mit der Log-Größe. Witness-Cosigning, Frischegarantien und gekachelter Speicher sind Roadmap, keine hier als fertig beschriebenen Funktionen. Differentialtests, Fuzzing und Recovery-Tests stehen im Repository.

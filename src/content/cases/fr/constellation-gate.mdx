@@ -1,0 +1,21 @@
+## Le problème d’ingénierie
+
+Prompts, documents récupérés et réponses d’outils peuvent introduire des instructions non fiables dans une application LLM. La frontière de sécurité doit les évaluer sans rendre l’usage légitime impraticable.
+
+Chez Constellation Network, j’ai conçu Gate de zéro puis dirigé son équipe. Ma responsabilité couvrait application, infrastructure et base de données. Ce récit décrit les capacités publiques, sans divulguer les mécanismes internes du détecteur.
+
+## Architecture et décisions
+
+Gate réunit gestion multi-tenant, détection de prompt injection, analyse de données sensibles, compression, cache, intégrations fournisseurs et audits vérifiables. Le schéma explique les responsabilités, sans reproduire la topologie privée ni l’ordre interne des traitements.
+
+Cache et compression répondent à des coûts différents et demandent isolation et préservation du contexte. Ils ne remplacent pas l’évaluation de sécurité. Observabilité et audit rendent les décisions inspectables après traitement.
+
+## Évaluation publiée
+
+J’ai coécrit avec Ryle Goehausen _Gate AI: LLM Security Benchmark — Evaluation Methodology & Results_. Le preprint du 27 mai 2026 rapporte **97,4 % de micro-F1 à 1,0 % de faux positifs**, sur **16 jeux publics et 12 111 exemples**.
+
+L’évaluation principale utilise une validation croisée stratifiée en cinq plis et un seuil global. Des diagnostics regroupés sur les quasi-doublons et des tests de généralisation la complètent. Ce sont des résultats de corpus, pas une garantie pour toute production. La publication détaille méthode, limites et révisions éventuelles.
+
+## Perspective technique
+
+La détection n’est qu’une partie d’un service fiable. Friction des usages légitimes, isolation, observabilité et reprise appartiennent à la même frontière opérationnelle.

@@ -1,0 +1,21 @@
+## O problema de engenharia
+
+Histórico financeiro não pode depender de cada chamador lembrar todas as regras. Requisições duplicadas, saques concorrentes e acesso direto ao banco podem quebrar suposições de um fluxo isolado.
+
+Ledger é um projeto independente com API Fastify em TypeScript, PostgreSQL e dashboard React. Invariantes críticas são impostas no banco, não apenas no código da aplicação.
+
+## Um lançamento atômico
+
+A API valida o lançamento e reivindica uma chave de idempotência com fingerprint do conteúdo. Contas são bloqueadas em ordem determinística, saldos calculados e entradas inseridas na mesma transação. Um trigger adiado revalida o equilíbrio e a moeda no commit.
+
+Uma repetição bem-sucedida retorna a transação original. Outro conteúdo com a mesma chave causa conflito. Uma transação que falha desfaz sua reivindicação, permitindo corrigir a causa e tentar novamente.
+
+## Dinheiro, concorrência e histórico
+
+Valores são inteiros em unidades mínimas, enviados como strings para preservar precisão. Locks serializam escritas conflitantes. Histórico não aceita alteração ou exclusão; correções são reversões vinculadas. O relatório de balancete recalcula saldos a partir das entradas e revela divergências.
+
+Os testes documentados usam PostgreSQL real para verificar concorrência, duplicação e invariantes. Mocks da aplicação não provam o comportamento de constraints e locks.
+
+## Garantias e limites
+
+Lock pessimista simplifica conflitos, mas serializa atualizações em contas concorridas. Manter saldo e histórico melhora leitura e exige conciliação. Autenticação, isolamento de tenants e outbox são roadmap. A demonstração abaixo é um modelo local determinístico; as garantias reais pertencem ao serviço e ao banco.

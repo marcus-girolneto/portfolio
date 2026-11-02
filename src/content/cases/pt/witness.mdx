@@ -1,0 +1,21 @@
+## O problema de engenharia
+
+Uma API append-only é uma promessa do operador. Um log de transparência permite verificar se uma entrada pertence a uma árvore comprometida e se uma árvore nova estende a anterior.
+
+Witness é um projeto independente em Go com provas Merkle de inclusão e consistência RFC 6962, checkpoints assinados com Ed25519, armazenamento resistente a falhas e monitoramento de visões conflitantes.
+
+## Da entrada ao recibo
+
+Um sequenciador único agrupa inclusões, grava entradas e índices de hashes, sincroniza o armazenamento e persiste atomicamente um checkpoint assinado. Só então retorna o recibo. Clientes verificam assinatura e prova, em vez de confiar apenas na declaração do servidor.
+
+RFC 6962 separa domínios: folhas usam o prefixo `0x00`; nós internos, `0x01`. A árvore interativa calcula SHA-256 real para quatro folhas e mostra como uma alteração modifica a raiz. Ela não produz checkpoints assinados nem implementa o monitor completo.
+
+## Durabilidade e observação
+
+Checksums e verificação do último checkpoint protegem a recuperação. Falhas de sincronização interrompem novas gravações. O monitor mantém um checkpoint confiável e verifica crescimento, rollback, forks e raízes diferentes para o mesmo tamanho.
+
+Assinaturas não impedem um operador desonesto de assinar duas histórias. Detectar visões divididas exige que essas visões se encontrem; um cliente isolado não conhece a visão de outra audiência.
+
+## Tradeoffs e limites
+
+Group commit reduz o custo por inclusão e um único escritor simplifica a ordenação. A verificação completa na inicialização é proporcional ao tamanho do log. Coassinatura por testemunhas, políticas de frescor e armazenamento em tiles são itens de roadmap, não capacidades apresentadas como concluídas. O repositório documenta testes diferenciais, fuzzing e recuperação.

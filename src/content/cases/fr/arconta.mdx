@@ -1,0 +1,21 @@
+## Le problème d’ingénierie
+
+La réforme fiscale brésilienne accroît les validations nécessaires aux cabinets comptables. Un système utile doit relier les documents à des constats traçables et à un processus clair de correction.
+
+J’ai construit Arconta comme SaaS pour ces cabinets. **Le dépôt est privé et le produit est en phase pilote.** Ce récit ne divulgue ni code ni infrastructure et ne revendique pas d’adoption commerciale large ou de conseil fiscal certifié.
+
+## Une frontière déterministe
+
+Le produit reçoit des XML fiscaux, valide leurs schémas et applique des règles accompagnées de sources officielles. Les constats sont explicables ; le modèle ne prononce pas de verdict fiscal.
+
+Un LLM peut formuler des faits déjà calculés, pas décider de la conformité. Une valeur officielle absente reste absente. TypeScript, Fastify, Next.js, PostgreSQL et des contrats Zod partagés composent le stack.
+
+## Isolation et traitement
+
+L’isolation des tenants concerne l’application et la base. Le traitement asynchrone sépare réception et validation de l’interaction du comptable. La déduplication évite de traiter un document répété comme nouveau.
+
+Les contrats alignent API, interface et traitements sur le sens des résultats. Le workflow de correction transforme les constats en actions que le cabinet peut examiner.
+
+## État et limites
+
+La documentation distingue les parcours testés des intégrations en attente d’autorisation ou de validation. Les règles nécessitent encore une revue comptable professionnelle. Traçabilité et limites explicites font partie du produit. Le site public lié ci-dessous a été vérifié.

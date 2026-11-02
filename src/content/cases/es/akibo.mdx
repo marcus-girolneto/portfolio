@@ -1,0 +1,21 @@
+## El problema de ingeniería
+
+El lenguaje natural es flexible; los registros financieros necesitan significado explícito. Un asistente debe unir ambos sin convertir ambigüedad en cambios silenciosos.
+
+Fundé Akibo en 2026: un asistente de finanzas personales con chat, voz, mensajería y dashboard Next.js. **El proyecto y su repositorio son privados.** El currículum y la presentación pública respaldan las capacidades; el repositorio autorizado aportó contexto adicional.
+
+## Arquitectura e integridad
+
+La orquestación usa herramientas validadas por esquema y confirmaciones explícitas. Así se separa la interpretación del modelo de las operaciones autorizadas. La stack incluye TypeScript, Node.js, Next.js, PostgreSQL y Redis.
+
+Row-level security ayuda al aislamiento. Las importaciones OFX, CSV, PDF y fotos pasan por conciliación para evitar duplicados y saldos incorrectos. La presentación pública describe 47 invariantes automatizados; no son una cifra de adopción ni garantía universal.
+
+## Decisiones de producto
+
+La mensajería facilita el acceso y el dashboard permite inspeccionar historiales. Las confirmaciones añaden un paso a cambio de hacer comprensibles las acciones relevantes. Validación, autorización, aislamiento y pruebas cubren riesgos diferentes.
+
+WhatsApp y Telegram están en el alcance del currículum; la documentación varía entre versiones, por lo que no se afirma que todos los canales estén activos. No se publica una URL de producto sin verificar.
+
+## Responsabilidad integral
+
+Akibo une dirección de producto, ingeniería full-stack y operación. La arquitectura se puede explicar en una conversación sin divulgar código, infraestructura privada ni datos de clientes.

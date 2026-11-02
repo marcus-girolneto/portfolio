@@ -1,0 +1,29 @@
+## The engineering problem
+
+An LLM application is an integration surface: user prompts, retrieved documents and tool responses can all contain instructions the application never intended to trust. A useful security boundary must evaluate those inputs without making normal use impractical.
+
+At Constellation Network, I designed and built Gate from zero, then led its engineering team. My ownership covered the application, infrastructure and database. This account stays at the public capability level; it does not disclose private detector internals or customer infrastructure.
+
+## Architecture and responsibilities
+
+Gate combines multi-tenant request handling, prompt-injection detection, sensitive-data scanning, prompt compression, response caching and provider integrations. Security observability and verifiable audit records make decisions inspectable after a request has completed.
+
+The diagram above is a conceptual view of those responsibilities, rather than an internal deployment map. Tenant isolation matters throughout the request lifecycle, including storage, cache boundaries and audit context. Provider integration belongs behind an explicit boundary so that application policy does not depend on the shape of a single vendor API.
+
+## Security, performance and tradeoffs
+
+Detection involves an operating-point tradeoff: catching more attacks can also block more legitimate requests. Reporting accuracy without a false-positive rate hides that cost. Gate’s public evaluation instead specifies a global operating point, with a pooled false-positive rate constrained to 1%.
+
+Caching and compression address different costs. A cache can avoid repeated provider work, but requires careful request equivalence and tenant boundaries. Compression reduces prompt size, but must preserve the information the downstream task needs. Neither mechanism substitutes for security evaluation. These are the architectural concerns behind the documented capabilities, without a claim about undisclosed internal ordering or latency.
+
+## Published evaluation
+
+I co-authored _Gate AI: LLM Security Benchmark — Evaluation Methodology & Results_ with Ryle Goehausen. The May 27, 2026 preprint reports **97.4% micro-F1 at a pooled 1.0% false-positive rate**, across **16 public datasets and 12,111 samples**.
+
+The headline pass uses five-fold stratified cross-validation. The paper also reports a grouped near-duplicate diagnostic, leave-one-dataset-out evaluation and other generalization checks. A global operating point is used across datasets; external comparisons are adjusted to matched false-positive rates when available.
+
+These are benchmark results on the published corpus, not a guarantee of detection quality on every production workload. The paper discusses contamination, generalization and comparison limits and may be revised. Consult the linked publication for the complete methodology and current figures.
+
+## Engineering perspective
+
+The work reinforced the importance of evaluating an AI security system as an operational boundary: detection quality, legitimate-user friction, isolation, observability and recovery all belong in the design conversation. A strong model score is one part of a reliable service.

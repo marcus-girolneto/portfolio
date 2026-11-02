@@ -1,0 +1,21 @@
+## El problema de ingeniería
+
+La integridad financiera no puede depender de que cada llamador recuerde todas las reglas. Duplicados, retiros concurrentes y acceso directo al banco pueden romper los supuestos.
+
+Ledger es un proyecto independiente con API Fastify en TypeScript, PostgreSQL y dashboard React. Los invariantes críticos se imponen en la base de datos.
+
+## Un asiento atómico
+
+La API valida el asiento y reclama una clave de idempotencia con fingerprint del contenido. Bloquea cuentas en orden determinista, calcula saldos e inserta entradas en una transacción. Un trigger diferido comprueba equilibrio y moneda al commit.
+
+Una repetición exitosa devuelve la transacción original. Otro contenido con la misma clave produce conflicto. Un fallo revierte la reclamación y permite corregir y reintentar.
+
+## Dinero, concurrencia e historial
+
+Los importes usan enteros en unidades mínimas y strings en la API para conservar precisión. Los bloqueos serializan escrituras conflictivas. El historial no se edita ni elimina: los errores se corrigen con reversiones vinculadas. El balance de comprobación recalcula saldos y muestra divergencias.
+
+Las pruebas documentadas usan PostgreSQL real para concurrencia, duplicados e invariantes. Un mock de la aplicación no prueba constraints o bloqueos.
+
+## Garantías y límites
+
+El bloqueo pesimista simplifica conflictos a cambio de serializar cuentas calientes. Guardar saldo e historial mejora lectura pero exige conciliación. Autenticación, aislamiento por inquilino y outbox son roadmap. La demo es un modelo local; las garantías reales pertenecen al servicio y a PostgreSQL.

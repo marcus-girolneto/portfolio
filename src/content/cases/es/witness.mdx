@@ -1,0 +1,21 @@
+## El problema de ingeniería
+
+Una API append-only es una promesa del operador. Un registro de transparencia permite verificar inclusión y que un árbol nuevo amplía el anterior.
+
+Witness es un proyecto independiente en Go con pruebas Merkle RFC 6962, checkpoints Ed25519, almacenamiento resistente a fallos y monitorización de historiales incompatibles.
+
+## De la entrada al recibo
+
+Un secuenciador agrupa entradas, escribe datos e índices, sincroniza almacenamiento y persiste atómicamente un checkpoint firmado. Solo después responde. Los clientes verifican firma y pruebas, sin confiar únicamente en el servidor.
+
+RFC 6962 separa dominios: hojas con `0x00`, nodos internos con `0x01`. La demo calcula SHA-256 real para cuatro hojas y muestra cómo cambia la raíz. No firma checkpoints ni implementa el monitor completo.
+
+## Durabilidad y observación
+
+Checksums y verificación contra el último checkpoint protegen la recuperación. Fallos de sincronización detienen nuevas escrituras. El monitor conserva un checkpoint fiable y detecta rollback, forks y raíces distintas para igual tamaño.
+
+Las firmas no impiden que un operador firme dos historias. Detectar vistas divididas requiere que se encuentren; un cliente aislado no conoce otras vistas.
+
+## Compromisos y límites
+
+Group commit amortiza sincronización; un escritor simplifica el orden. La verificación inicial crece con el tamaño del registro. Cofirma por testigos, frescura y almacenamiento en tiles son roadmap, no funciones terminadas. El repositorio detalla pruebas diferenciales, fuzzing y recuperación.

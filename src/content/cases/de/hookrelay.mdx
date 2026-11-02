@@ -1,0 +1,19 @@
+## Die technische Aufgabe
+
+Ein Ereignis zu publizieren ist einfach. Es trotz langsamer oder ausgefallener Empfänger zuverlässig zuzustellen verlangt ein System. Hookrelay ist ein eigenständiges Open-Source-Projekt mit dauerhaftem Fan-out, Signaturen, Retries, Inspektion und Dead-Letter-Replay.
+
+## Dauerhafte Koordination
+
+Die Go-API speichert Ereignisse und Zustellungen in PostgreSQL. Worker beanspruchen fällige Arbeit mit `SELECT … FOR UPDATE SKIP LOCKED`. Sperren gelten nur für die Beanspruchung, nie während HTTP-Aufrufen.
+
+Leases und Fencing-Tokens verhindern, dass verspätete Worker neueren Zustand überschreiben. Arbeit beanspruchen, ausführen und das Ergebnis speichern sind getrennte Fehlergrenzen.
+
+## Fehler, Wiederholung und Identität
+
+Begrenztes exponentielles Backoff mit Jitter, Request-Timeouts und `Retry-After` für 429/503 steuern Wiederholungen. Nach dem Limit geht die Zustellung in die Dead-Letter-Queue. Replay ermöglicht gezielte Wiederaufnahme; 410 deaktiviert den Endpunkt.
+
+Idempotenzschlüssel machen wiederholtes Publizieren eindeutig. Geänderter Inhalt mit demselben Schlüssel wird abgelehnt. HMAC-SHA256 folgt Standard Webhooks. Empfänger müssen Signaturen prüfen und IDs deduplizieren.
+
+## Garantien und Grenzen
+
+Das Modell ist **At-least-once**, nicht Exactly-once für externe Effekte. Ein Empfänger kann erfolgreich verarbeiten, obwohl der Sender keine Antwort sieht. Die Browserdemo ist vereinfacht; das Repository dokumentiert Tests, Betrieb und PostgreSQL-Tradeoffs.

@@ -1,0 +1,21 @@
+## Die technische Aufgabe
+
+Prompts, abgerufene Dokumente und Tool-Antworten können nicht vertrauenswürdige Anweisungen in LLM-Anwendungen einschleusen. Eine Sicherheitsgrenze muss diese Eingaben prüfen, ohne legitime Nutzung unnötig zu behindern.
+
+Bei Constellation Network habe ich Gate von Grund auf entwickelt und anschließend das Engineering-Team geleitet. Meine Verantwortung umfasste Anwendung, Infrastruktur und Datenbank. Dieser Bericht beschreibt öffentliche Fähigkeiten und keine privaten Detektor-Interna.
+
+## Architektur und Entscheidungen
+
+Gate verbindet Mandantenfähigkeit, Prompt-Injection-Erkennung, Prüfung sensibler Daten, Prompt-Kompression, Antwort-Caching, Provider-Anbindungen und verifizierbare Audit-Einträge. Das Diagramm ist konzeptuell und zeigt weder private Topologie noch interne Ausführungsreihenfolge.
+
+Caching spart wiederholte Arbeit; Kompression reduziert Prompt-Größe. Beide brauchen klare Mandantengrenzen und erhaltenen Kontext. Sie ersetzen keine Sicherheitsprüfung. Beobachtbarkeit und Audit-Kontext machen Entscheidungen nachvollziehbar.
+
+## Veröffentlichte Evaluation
+
+Gemeinsam mit Ryle Goehausen habe ich _Gate AI: LLM Security Benchmark — Evaluation Methodology & Results_ verfasst. Der Preprint vom 27. Mai 2026 berichtet **97,4 % Mikro-F1 bei 1,0 % Falsch-Positiv-Rate**, über **16 öffentliche Datensätze mit 12.111 Beispielen**.
+
+Das Hauptergebnis nutzt fünffache stratifizierte Kreuzvalidierung und einen globalen Betriebspunkt. Gruppierte Ähnlichkeitsdiagnostik und weitere Generalisierungstests ergänzen es. Diese Korpus-Ergebnisse sind keine Garantie für jede Produktionslast. Methodik, Grenzen und mögliche Revisionen stehen im verlinkten Bericht.
+
+## Engineering-Perspektive
+
+Detektionsqualität ist nur ein Teil eines zuverlässigen Dienstes. Nutzerreibung, Isolation, Beobachtbarkeit und Wiederherstellung gehören zur gleichen betrieblichen Sicherheitsgrenze.

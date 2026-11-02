@@ -1,0 +1,21 @@
+## O problema de engenharia
+
+Nós distribuídos recebem eventos em momentos diferentes. Alguns ficam lentos, desconectam ou reiniciam com estado incompleto. Confiabilidade depende tanto de preservar o acordo quanto de recuperar uma visão coerente da rede.
+
+Meu trabalho profissional na Constellation incluiu consenso, rollback e recuperação de snapshots, sincronização L1, provas de estado, staking delegado e desempenho de Merkle Patricia Trie. Também investiguei incidentes em produção, incluindo um ciclo de reinicialização na mainnet, e entreguei correções de recuperação e release.
+
+## Arquitetura conceitual
+
+Nós validadores coordenam consenso e snapshots acordados. Sincronização e recuperação reconectam o estado local a um estado aceito; provas ajudam a verificar compromissos sobre esse estado. O desenho explica responsabilidades, sem afirmar uma sequência privada de mensagens.
+
+O trabalho utilizou Scala e Cats Effect, com AWS, Docker e Ansible na infraestrutura. O repositório público Tessellation oferece o contexto do protocolo. Não há reprodução de material proprietário.
+
+## Correção e operação
+
+Recuperar não é apenas reiniciar um processo. O nó precisa reconstruir um estado coerente, identificar snapshots confiáveis e retomar a participação sem tratar trabalho incompleto como história aceita. Concorrência exige observar pressupostos de estado e ciclo de vida.
+
+Construí ferramentas de deploy, monitoramento, reinicialização automática e streaming de snapshots para operadores e parceiros. Automação precisa preservar evidências para diagnóstico; repetir reinicializações sem contexto não resolve a confiabilidade.
+
+## Produção e simulação
+
+As atividades profissionais descritas são apoiadas pelo currículo. A demonstração de consenso por líder no Laboratório é educativa: **não é o protocolo Constellation**, não reproduz seu modelo de segurança e não implica que uma arquitetura alternativa foi implantada.

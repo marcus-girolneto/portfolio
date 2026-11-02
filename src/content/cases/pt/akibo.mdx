@@ -1,0 +1,21 @@
+## O problema de engenharia
+
+Linguagem natural é flexível; registros financeiros precisam de significado explícito. Um assistente deve conectar essas duas realidades sem transformar ambiguidade em alterações silenciosas nos dados.
+
+Fundei o Akibo em 2026. É um assistente de finanças pessoais com chat, voz, integrações de mensagens e dashboard em Next.js. **O projeto e o repositório são privados.** As capacidades descritas são apoiadas pelo currículo e pela apresentação pública, com contexto adicional revisado no repositório autorizado.
+
+## Arquitetura e integridade
+
+A orquestração de agentes usa ferramentas com validação de esquema e confirmações explícitas. Isso separa a interpretação do modelo das operações que a aplicação permite executar. A stack inclui TypeScript, Node.js, Next.js, PostgreSQL e Redis.
+
+Segurança em nível de linha no PostgreSQL ajuda a isolar dados por usuário. Importações OFX, CSV, PDF e fotos passam por conciliação para evitar que documentos repetidos criem saldos plausíveis, mas incorretos. A visão pública descreve 47 invariantes automatizados de integridade financeira; essa contagem não é uma métrica de adoção ou garantia universal.
+
+## Decisões de produto
+
+Mensagens facilitam o acesso; o dashboard complementa a inspeção de históricos estruturados. Confirmações acrescentam uma etapa, mas tornam ações relevantes compreensíveis antes de gravá-las. Validação, autorização, isolamento e testes cobrem falhas diferentes.
+
+As integrações de WhatsApp e Telegram fazem parte do escopo descrito no currículo; a documentação varia entre versões, por isso não se afirma que todos os canais estejam atualmente ativos. Nenhum destino de produto foi verificado para publicação.
+
+## Responsabilidade de ponta a ponta
+
+O Akibo reúne direção de produto, desenvolvimento full-stack e operação. A arquitetura pode ser discutida em uma conversa técnica, sem expor código privado, infraestrutura ou dados de clientes.
