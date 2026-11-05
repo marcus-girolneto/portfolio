@@ -17,6 +17,7 @@ import {
   ArrowUpRight,
   Braces,
   Check,
+  ChevronDown,
   Code2,
   Fingerprint,
   GitBranch as Github,
@@ -127,7 +128,10 @@ export default async function Home({
             <span className="status-dot" /> OPEN TO ENGINEERING OPPORTUNITIES
           </span>
           <span className="hero-location">
-            <Globe2 size={12} /> BRAZIL · UTC−3
+            <Globe2 size={12} />
+            <span>
+              REMOTE · UTC−3, FULL US WORKDAY OVERLAP · OPEN TO RELOCATION
+            </span>
           </span>
         </div>
         <HeroNetwork />
@@ -147,9 +151,9 @@ export default async function Home({
             </span>
           </h1>
           <p className="hero-description hero-enter">
-            I design and build reliable systems at the intersection of
-            distributed computing, AI infrastructure, and scalable backend
-            engineering.
+            {
+              "I build and ship products end to end, and I'm best at the parts that have to keep working when things go wrong. Most recently: a multi-tenant LLM security gateway, 97.4% F1 at 1% false positives on a public benchmark."
+            }
           </p>
           <div className="hero-actions hero-enter">
             <Link href="#work" className="button button-primary">
@@ -173,7 +177,7 @@ export default async function Home({
           </div>
         </div>
         <div className="hero-bottom">
-          <span>COMPLEXITY, WITH CLARITY.</span>
+          <span>97.4% F1 AT 1% FALSE POSITIVES · PUBLIC BENCHMARK</span>
           <a href="#work">
             SCROLL TO EXPLORE <ArrowDown size={12} />
           </a>
@@ -390,11 +394,17 @@ export default async function Home({
                 <span className="timeline-year">{job.period}</span>
                 <span className="timeline-marker" />
                 <span className="job-heading">
-                  <strong>{job.company}</strong>
+                  <strong>
+                    {job.company}
+                    <ChevronDown
+                      size={14}
+                      className="experience-chevron"
+                      aria-hidden="true"
+                    />
+                  </strong>
                   <span>{job.role}</span>
                 </span>
                 <span className="job-date">{job.date}</span>
-                <span className="expand-symbol">+</span>
               </summary>
               <div className="experience-detail">
                 <p>{job.intro}</p>

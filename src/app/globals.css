@@ -1878,16 +1878,6 @@ ul {
   color: var(--tone-8998b2);
   text-align: right;
 }
-.expand-symbol {
-  font-size: 20px;
-  font-weight: 300;
-  color: var(--tone-9aaccb);
-  width: 20px;
-  text-align: center;
-}
-.experience-row[open] .expand-symbol {
-  transform: rotate(45deg);
-}
 .experience-detail {
   padding: 0 40px 28px 149px;
   max-width: 850px;
@@ -3985,10 +3975,6 @@ ul {
     order: 4;
     padding-top: 3px;
   }
-  .expand-symbol {
-    font-size: 18px;
-    margin-left: auto;
-  }
   .experience-detail {
     padding: 0 5px 25px 22px;
   }
@@ -4591,7 +4577,6 @@ ul {
     min-height: 850px;
   }
   .hero-topline .hero-location {
-    display: none;
   }
   .hero-actions .button {
     font-size: 9px;
@@ -5248,7 +5233,6 @@ html:not(:lang(en)) .contact-panel h2 {
 }
 @media (max-width: 360px) {
   .hero-topline .hero-location {
-    display: none;
   }
   .wordmark {
     font-size: 11px;
@@ -5560,5 +5544,92 @@ html:not(:lang(en)) .contact-panel h2 {
   }
   .language-popover {
     right: 0;
+  }
+}
+/* Lead with working availability and keep longer factual copy readable. */
+.hero-topline {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 9px;
+  padding-bottom: 32px;
+}
+.hero-location {
+  max-width: 100%;
+  line-height: 1.8;
+}
+.hero-location > svg {
+  flex-shrink: 0;
+}
+.hero-location > span {
+  min-width: 0;
+}
+.hero-description {
+  max-width: 480px;
+}
+.hero {
+  min-height: 930px;
+}
+.hero-bottom > span:first-child {
+  max-width: 48%;
+  line-height: 1.8;
+}
+.job-heading > strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.experience-chevron {
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.18s;
+}
+.experience-row[open] .experience-chevron {
+  transform: rotate(180deg);
+}
+@media (max-width: 800px) {
+  .hero {
+    min-height: 930px;
+  }
+}
+@media (max-width: 600px) {
+  .hero {
+    min-height: 1060px;
+  }
+  .hero-topline {
+    gap: 10px;
+    padding-bottom: 29px;
+    font-size: 7px;
+    letter-spacing: 0.6px;
+  }
+  .hero-topline .hero-location {
+    display: flex;
+    font-size: 8px;
+    flex-shrink: 1;
+    line-height: 1.9;
+    align-items: flex-start;
+  }
+  .hero-location > svg {
+    margin-top: 2px;
+  }
+  .hero-description {
+    max-width: 100%;
+    line-height: 1.9;
+  }
+  .hero-bottom > span:first-child {
+    display: none;
+  }
+  .experience-chevron {
+    width: 12px;
+    height: 12px;
+  }
+}
+@media (max-width: 360px) {
+  .hero {
+    min-height: 1140px;
+  }
+  .hero-topline .hero-location {
+    display: flex;
+    font-size: 7px;
   }
 }
